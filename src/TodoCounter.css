@@ -1,0 +1,19 @@
+.tc-todocounter {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 0;
+  padding: 3rem;
+  font-weight: normal;
+  transform: none;
+  color: #eaeaea;
+}
+
+
+.tc-todocounter span {
+  font-weight: bold;
+}
+
+.tc-todocounter:hover {
+  color: #ebd4d4;
+  transform: translateY(-5px);
+}

@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { CreateTodoButton } from "./CreateTodoButton"
+import { TodoCounter } from "./TodoCounter"
+import { TodoItem } from "./TodoItem"
+import { TodoList } from "./TodoList"
+import { TodoSearch } from "./TodoSearch"
+import "./App.css"
+import React from "react"
 
-function App() {
-  const [count, setCount] = useState(0)
+const defaultTodos = [
+    { text: "Mi primera tarea", completed: true },
+    { text: "Comer", completed: false },
+    { text: "Dormir", completed: true },
+    { text: "Codear", completed: false },
+    { text: "Repetir", completed: true },
+    { text: "Hacer ejercicio", completed: false },
+    { text: "Leer documentación", completed: true },
+    { text: "Practicar React", completed: false },
+    { text: "Revisar commits", completed: true },
+    { text: "Descansar la vista", completed: false },
+];
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+function App(){
+    return(
+        <div className="a-container">
+            <TodoCounter 
+            completed={8}
+            total={4}/>
+            <TodoSearch/>
+            <TodoList>
+                {defaultTodos.map(({text,completed})=>{
+                    return(
+                        <TodoItem
+                        key={text}
+                        text={text}
+                        completed={completed}
+                        value={text}/>
+                    )
+                })}
+            </TodoList>
+            <CreateTodoButton/>
+        </div>
+    )
 }
 
-export default App
+export {App};

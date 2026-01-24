@@ -1,0 +1,23 @@
+.ts-todosearch {
+  width: calc(100% - 3.75rem);
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 2px solid #3a264f;
+  background: rgba(0, 0, 0, 0.35);
+  color: #eaeaea;
+  font-size: 24px;
+  font-weight: 400;
+  transition: 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.ts-todosearch:focus{
+  outline: none;
+  border-color: #a4508b;
+  box-shadow: 0 0 12px rgba( 164, 80, 139, 0.5);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.ts-todosearch::placeholder{
+  color: #9873b9;
+}
