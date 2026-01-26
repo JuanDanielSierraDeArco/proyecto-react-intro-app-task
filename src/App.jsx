@@ -1,10 +1,7 @@
-import { CreateTodoButton } from "./CreateTodoButton";
-import { TodoCounter } from "./TodoCounter";
-import { TodoItem } from "./TodoItem";
-import { TodoList } from "./TodoList";
-import { TodoSearch } from "./TodoSearch";
-import "./App.css";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { AppUI } from "./components/ui/AppUI";
 import React from "react";
+import "./styles/App.css";
 
 // const defaultTodos = [
 //   { text: "Mi primera tarea", completed: true },
@@ -20,30 +17,8 @@ import React from "react";
 // ];
 // localStorage.setItem("TODOS_V1",JSON.stringify(defaultTodos));
 // localStorage.setItem("TODOS_V1",defaultTodos);
-
-function useLocalStorage(itemName, initialValue){
-  const localStorageItems = localStorage.getItem(itemName);
-  let parsedItems;
-
-  if (!localStorageItems){
-    localStorage.setItem(itemName, JSON.stringify(initialValue))
-    parsedItems = initialValue;
-  } else {
-    parsedItems = JSON.parse(localStorageItems);
-  }
-
-  const [items, setItems] = React.useState(parsedItems);
-
-  const saveItems = (newItems) =>{
-    localStorage.setItem(itemName, JSON.stringify(newItems));
-    setItems(newItems);
-  };
-  return [items, saveItems];
-}
-
-
 function App() {
-  const [todos, saveTodos] = useLocalStorage("TODOS_V1", []);
+  const {items: todos, loading, error, saveItems: saveTodos} = useLocalStorage("TODOS_V1", []);
   const [searchValue, setSearchValue] = React.useState("");
 
   const completedtodos = todos.filter((todos) => !!todos.completed).length;
@@ -54,6 +29,19 @@ function App() {
     const searchtext = searchValue.toLowerCase();
     return todoText.includes(searchtext);
   });
+
+  console.log("log 1");
+  // React.useEffect(()=>{
+  //   console.log("log 2");
+  // },)
+  // React.useEffect(()=>{
+  //   console.log("log 2");
+  // },[])
+  React.useEffect(()=>{
+    console.log("looooooooooooog 2");
+  },[totalTodos])
+  console.log("log 3");
+
 
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -68,25 +56,17 @@ function App() {
   }
 
   return (
-    <div className="a-container">
-      <TodoCounter completed={completedtodos} total={totalTodos} />
-      <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
-      <TodoList>
-        {searchedTodos.map(({ text, completed }) => {
-          return (
-            <TodoItem
-              key={text}
-              text={text}
-              completed={completed}
-              value={text}
-              onCompleted={() => completeTodo(text)}
-              onDelete={() => deleteTodo(text)}
-            />
-          );
-        })}
-      </TodoList>
-      <CreateTodoButton />
-    </div>
+    <AppUI
+      completedtodos={completedtodos}
+      completeTodo={completeTodo}
+      totalTodos={totalTodos}
+      searchValue={searchValue}
+      setSearchValue={setSearchValue}
+      searchedTodos={searchedTodos}
+      deleteTodo={deleteTodo}
+      loading = {loading}
+      error = {error}
+    />
   );
 }
 

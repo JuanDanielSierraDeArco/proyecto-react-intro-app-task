@@ -1,5 +1,5 @@
-import CheckSVG from "./assets/check.svg?react";
-import DeleteSVG from "./assets/delete.svg?react";
+import CheckSVG from "../../assets/icons/check.svg?react";
+import DeleteSVG from "../../assets/icons/delete.svg?react";
 import "./TodoIcon.css"
 
 const iconTypes = {
