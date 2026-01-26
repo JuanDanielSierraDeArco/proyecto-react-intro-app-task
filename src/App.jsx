@@ -6,22 +6,41 @@ import { TodoSearch } from "./TodoSearch";
 import "./App.css";
 import React from "react";
 
-const defaultTodos = [
-  { text: "Mi primera tarea", completed: true },
-  { text: "Comer", completed: false },
-  { text: "Dormir", completed: true },
-  { text: "Codear", completed: false },
-  { text: "Repetir", completed: true },
-  { text: "Hacer ejercicio", completed: false },
-  { text: "Leer documentación", completed: true },
-  { text: "Practicar React", completed: false },
-  { text: "Revisar commits", completed: true },
-  { text: "Descansar la vista", completed: false },
-];
+// const defaultTodos = [
+//   { text: "Mi primera tarea", completed: true },
+//   { text: "Comer", completed: false },
+//   { text: "Dormir", completed: true },
+//   { text: "Codear", completed: false },
+//   { text: "Repetir", completed: true },
+//   { text: "Hacer ejercicio", completed: false },
+//   { text: "Leer documentación", completed: true },
+//   { text: "Practicar React", completed: false },
+//   { text: "Revisar commits", completed: true },
+//   { text: "Descansar la vista", completed: false },
+// ];
+// localStorage.setItem("TODOS_V1",JSON.stringify(defaultTodos));
+// localStorage.setItem("TODOS_V1",defaultTodos);
+
 
 function App() {
-  const [todos, setTodos] = React.useState(defaultTodos);
+
+  const localStorageTodos = localStorage.getItem("TODOS_V1");
+  let parsedTodos;
+  if (!localStorageTodos){
+    localStorage.setItem("TODOS_V1", JSON.stringify([]))
+    parsedTodos = [];
+  } else {
+    parsedTodos = JSON.parse(localStorageTodos);
+  }
+
+
+  const [todos, setTodos] = React.useState(parsedTodos);
   const [searchValue, setSearchValue] = React.useState("");
+
+  const saveTodos = (newTodos) =>{
+    localStorage.setItem("TODOS_V1", JSON.stringify(newTodos));
+    setTodos(newTodos);
+  }
 
   const completedtodos = todos.filter((todos) => !!todos.completed).length;
   const totalTodos = todos.length;
@@ -36,12 +55,12 @@ function App() {
     const newTodos = [...todos];
     const todoIndex = newTodos.findIndex((todo) => todo.text === text);
     newTodos[todoIndex].completed = !newTodos[todoIndex].completed;
-    setTodos(newTodos);
+    saveTodos(newTodos);
   };
 
   const deleteTodo = (text) =>{
     const newTodos = todos.filter(todo => todo.text !== text)
-    setTodos(newTodos);
+    saveTodos(newTodos);
   }
 
   return (
