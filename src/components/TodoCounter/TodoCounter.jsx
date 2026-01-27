@@ -1,17 +1,17 @@
 import React from "react";
-import { BsEmojiAstonished } from "react-icons/bs";
 import "./TodoCounter.css"
+import { TodoContext } from "../../context/TodoContext";
 
-
-function TodoCounter({total, completed}){
+function TodoCounter(){
+  const {totalTodos, completedtodos} = React.useContext(TodoContext)
   let mensaje;
 
-  if(total === 0){
+  if(totalTodos === 0){
     mensaje = "No tienes tareas por hacer!";
-  }else if(total === completed){
+  }else if(totalTodos === completedtodos){
     mensaje = <><span>¡Felicidades!</span> Has completado todas tus tareas 🎉 </>
   } else {
-    mensaje = <>Has completado <span>{completed}</span> de <span>{total}</span> tareas 📝</>
+    mensaje = <>Has completado <span>{completedtodos}</span> de <span>{totalTodos}</span> tareas 📝</>
   }
 
     return(
